@@ -14,19 +14,19 @@ pipeline {
 
         stage('Install Dependencies') {
             steps {
-                sh 'npm install'
+                bat 'npm install'
             }
         }
 
         stage('Run Tests') {
             steps {
-                sh 'npm test'  // Jenkins will fail if this step fails
+                bat 'npm test'  // Jenkins will fail if this step fails
             }
         }
 
         stage('Build Application') {
             steps {
-                sh 'npm run build'
+                bat 'npm run build'
             }
         }
     }

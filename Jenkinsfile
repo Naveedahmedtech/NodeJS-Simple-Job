@@ -1,44 +1,42 @@
 pipeline {
-    agent any 
+    agent any
 
     tools {
-        nodejs 'nodeJS'  
+        nodejs 'nodeJS'
     }
 
     stages {
         stage('Checkout Code') {
             steps {
-                // Clones the repository
                 git branch: 'master', url: 'git@github.com:Naveedahmedtech/NodeJS-Simple-Job.git'
             }
         }
 
         stage('Install Dependencies') {
             steps {
-                // Install npm dependencies
-                bat 'npm install'
+                sh 'npm install'
             }
         }
 
         stage('Run Tests') {
             steps {
-                // Run your tests
-                bat 'npm version'
+                sh 'npm test'  // Jenkins will fail if this step fails
             }
         }
 
         stage('Build Application') {
             steps {
-                // Build the application (if applicable)
-                bat 'npm version'
+                sh 'npm run build'
             }
-        } 
+        }
     }
 
     post {
         always {
-            // Archive the build artifacts (optional)
             archiveArtifacts artifacts: '**/build/**/*', allowEmptyArchive: true
+        }
+        failure {
+            mail to: 'team@example.com', subject: "Build Failed", body: "Please check the Jenkins build logs."
         }
     }
 }

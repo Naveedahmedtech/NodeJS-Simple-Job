@@ -32,7 +32,7 @@ pipeline {
                 // Build the application (if applicable)
                 bat 'npm version'
             }
-        }
+        } 
     }
 
     post {
